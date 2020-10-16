@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 import Ice
 Ice.loadSlice('Printer.ice')
@@ -8,10 +10,22 @@ class Intermediary(Example.Intermediary):
     def __init__(self, broker):
         self.communicator = broker
 
-    def send(self, serv, message, current=None):
-        proxy = self.communicator().stringToProxy(serv)
-        print(serv)
-        server = Example.ServerPrx.checkedCast(proxy)
+    # Si echas un vistazo al fichero Printer.ice, verás que el método send() tiene dos argumentos
+    # en el siguiente orden: message, destinationProxy
+    # Este es el orden que tienes que utilizar en la definición del método. También es recomendable
+    # mantener el nombre de los argumentos porque en Python puedes utilizar ese nombre en la llamada
+    def send(self, message, destinationProxy, current=None):
+
+        # "communicator() es un método de la clase Ice.Application() que devuelve un CommunicatorI()
+        # Si le pasas "broker" al constructor, le pasas directamente un CommunicatorI()
+        # que no tiene método communicator() ni lo necesita porque él ya lo es. Por tanto
+        # sólo tienes que usarlo directamente:
+        proxy = self.communicator.stringToProxy(destinationProxy)
+
+        print(destinationProxy)
+
+        # De nuevo, en el slice puedes ver la interfaz se llama Printer(), no Server()
+        server = Example.PrinterPrx.checkedCast(proxy)
 
         if not server:
             raise RuntimeError('Invalid proxy')
