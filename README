@@ -1,5 +1,0 @@
-1. El profesor ejecutará un servidor.
-2. El alumno ejecutará en un ordenador un servidor propio que espera recibir una cadena.
-3. Con un cliente, el alumno mandará al servidor que haya ejecutado el profesor su nombre completo y el proxy de su servidor (ver la interfaz proporcionada).
-4. El servidor del profesor, que imprimirá el nombre del alumno, hará de intermediario entre el cliente y el servidor del alumno.
-5. El servidor del alumno recibirá una confirmación en forma de texto de que el mensaje ha sido recibido.
